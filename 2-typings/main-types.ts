@@ -81,17 +81,14 @@ function toWords(number: number | string, asOrdinal: boolean): string {
   return asOrdinal ? makeOrdinal(words) : words;
 }
 
-function generateWords(number: number, words?: string[]): string {
+function generateWords(number: number, words: string[] = []): string {
   let remainder, word;
 
   // We’re done
   if (number === 0) {
     return !words ? "zero" : words.join(" ").replace(/,$/, "");
   }
-  // First run
-  if (!words) {
-    words = [];
-  }
+
   // If negative, prepend “minus”
   if (number < 0) {
     words.push("minus");
