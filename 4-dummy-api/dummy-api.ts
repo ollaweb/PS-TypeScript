@@ -91,13 +91,21 @@ interface User {
     },
     ein: string,
     ssn: string,
-    userAgent: string
+    userAgent: string,
+}
+
+function isInstanceOfUser(data: unknown): data is User {
+    return (data as User).birthDate !== undefined;
 }
 
 async function getUsers() {
     try {
-        await axios.get('https://dummyjson.com/users')
-        .then((res)=> console.log(res.data));
+        const {data} = await axios.get('https://dummyjson.com/users');
+        if(isInstanceOfUser(data.users[0])) {
+            console.log(data.users);
+        } else {
+            throw new Error('There is no User');
+        }
     } catch(error) {
         if(error instanceof Error) {
             throw new Error(error.message)

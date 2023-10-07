@@ -45,12 +45,19 @@ var HairColor;
     HairColor["Curly"] = "Curly";
     HairColor["Coily"] = "Coily";
 })(HairColor || (HairColor = {}));
+function isInstanceOfUser(data) {
+    return data.birthDate !== undefined;
+}
 function getUsers() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let users;
-            yield axios_1.default.get('https://dummyjson.com/users')
-                .then((res) => console.log(res.data));
+            const { data } = yield axios_1.default.get('https://dummyjson.com/users');
+            if (isInstanceOfUser(data.users[0])) {
+                console.log(data.users);
+            }
+            else {
+                throw new Error('There is no User');
+            }
         }
         catch (error) {
             if (error instanceof Error) {
